@@ -115,5 +115,5 @@ st.write(
 )
 
 st.success(
-    "Employee Salary Analysis completed successfully! 🎉"
+    "Employee Salary Analysis completed successfully-version-2! 🎉"
 )
