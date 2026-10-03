@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 
 # Page configuration
 st.set_page_config(
@@ -15,7 +14,7 @@ st.write("Veda Technology Internship Project")
 
 st.divider()
 
-# Employee data
+# Employee dataset
 data = {
     "Employee": [
         "Arun",
@@ -43,16 +42,13 @@ data = {
     ]
 }
 
-# Create DataFrame
 df = pd.DataFrame(data)
 
-# Calculate salary statistics
-salaries = df["Salary"].tolist()
-
-total_salary = sum(salaries)
-average_salary = total_salary / len(salaries)
-highest_salary = max(salaries)
-lowest_salary = min(salaries)
+# Salary calculations
+total_salary = df["Salary"].sum()
+average_salary = df["Salary"].mean()
+highest_salary = df["Salary"].max()
+lowest_salary = df["Salary"].min()
 
 highest_employee = df.loc[
     df["Salary"].idxmax(),
@@ -60,18 +56,21 @@ highest_employee = df.loc[
 ]
 
 # Dataset
-st.header("Employee Dataset")
+st.header("📊 Employee Dataset")
 
-st.dataframe(df, use_container_width=True)
+st.dataframe(
+    df,
+    use_container_width=True
+)
 
 # Statistics
-st.header("Salary Statistics")
+st.header("📈 Salary Statistics")
 
 col1, col2, col3, col4 = st.columns(4)
 
 col1.metric(
     "Total Salary",
-    f"₹{total_salary:,}"
+    f"₹{total_salary:,.0f}"
 )
 
 col2.metric(
@@ -81,48 +80,40 @@ col2.metric(
 
 col3.metric(
     "Highest Salary",
-    f"₹{highest_salary:,}"
+    f"₹{highest_salary:,.0f}"
 )
 
 col4.metric(
     "Lowest Salary",
-    f"₹{lowest_salary:,}"
+    f"₹{lowest_salary:,.0f}"
 )
 
 # Highest paid employee
-st.header("Highest-Paid Employee")
+st.header("🏆 Highest-Paid Employee")
 
 st.success(
-    f"{highest_employee} earns ₹{highest_salary:,}"
+    f"{highest_employee} earns ₹{highest_salary:,.0f}"
 )
 
 # Chart
-st.header("Salary Visualization")
+st.header("📊 Salary Visualization")
 
-fig, ax = plt.subplots(figsize=(10, 5))
+chart_data = df.set_index("Employee")
 
-ax.bar(
-    df["Employee"],
-    df["Salary"]
+st.bar_chart(
+    chart_data["Salary"]
 )
 
-ax.set_xlabel("Employee")
-ax.set_ylabel("Salary (₹)")
-ax.set_title("Employee Salary Analysis")
-
-plt.xticks(rotation=45)
-plt.tight_layout()
-
-st.pyplot(fig)
-
 # Conclusion
-st.header("Conclusion")
+st.header("📝 Conclusion")
 
 st.write(
     "The employee salary dataset was successfully analyzed "
-    "using Python. The application calculates total, average, "
-    "highest, and lowest salaries and identifies the "
-    "highest-paid employee."
+    "using Python. The application calculates the total, "
+    "average, highest, and lowest salaries and identifies "
+    "the highest-paid employee."
 )
 
-st.success("Employee Salary Analysis completed successfully! 🎉")
+st.success(
+    "Employee Salary Analysis completed successfully! 🎉"
+)
